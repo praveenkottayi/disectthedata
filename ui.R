@@ -14,6 +14,12 @@ fluidPage(
   # Application title.
   titlePanel("Disect the data: Demo data analytics"),
   
+  tags$style(HTML("
+        .tabs-above > .nav > li[class=active] > a {
+                  background-color: #000;
+                  color: #FFF;
+                  }")),
+  
 
   sidebarLayout(
     sidebarPanel( tags$head(narrowSidebar),
@@ -93,8 +99,6 @@ fluidPage(
         
         tabPanel("correlation matrix",
                  plotOutput("corrmat")),
-        
-        
         
         tabPanel("clustering",
                  h4("Clusters"),

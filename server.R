@@ -38,7 +38,6 @@ function(input, output,session) {
   output$summary <- renderPrint({
     dataset <- datasetInput()
     summary(dataset)
-    #print(ncol(dataset))
     
   })
   #################################################################
@@ -56,13 +55,6 @@ function(input, output,session) {
   
   #################################################################
   output$histogram <- renderPlot({
-    #dataset = datasetInput()
-    #attribute = input$obs
-    
-    #attribute_names = colnames(data)
-    #x_name= attribute_names[attribute]
-    #print(x_name)
-    
     # draw the histogram with the specified number of bins
     
     x_name = choiceHist()
@@ -73,14 +65,6 @@ function(input, output,session) {
   
   #################################################################
   output$scatterplot <- renderPlot({
-    #dataset = datasetInput()
-    #attribute_names = colnames(dataset)
-    #x=as.integer(choiceX())
-    #y=as.integer(choiceY())
-    #print(typeof(x))
-    #plot(dataset[,x], dataset[,y],xlab = attribute_names[x],ylab = attribute_names[y],col= "blue",type = "p" )
-    
-    
     x = choiceX()
     y = choiceY()
     plot(data[,x], data[,y],xlab = x,ylab = y,col= "blue",type = "p" ,cex=1,cex.lab=1,cex.axis=1)
@@ -88,13 +72,8 @@ function(input, output,session) {
   })
   #################################################################
   output$correlation <- renderPrint({
-    #dataset = datasetInput()
-    #attribute_names = colnames(dataset)
-    #x=as.integer(choiceX())
-    #y=as.integer(choiceY())
     x = choiceX()
     y = choiceY()
-    
     c = (cor(data[,x], data[,y]))
     print(c)
     
@@ -208,10 +187,7 @@ function(input, output,session) {
   ##########################################################
   
   output$model <- renderPrint({
-    #dataset <- datasetInput()
-    #summary(dataset)
-    #print(ncol(dataset))
-    #test_passing_varibale = "123"
+    
     print(selected_variables)
     
   })
