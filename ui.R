@@ -1,26 +1,33 @@
+# Final demo version
+
+
 library(shiny)
 library(shinythemes)
+
+data <- getCSV()
 
 narrowSidebar <- HTML('<style>.span16 {min-width: 265px; max-width: 265px; }</style>')
 
 # Define UI for dataset viewer application
 fluidPage(
-  theme = shinytheme("superhero"), #superhero
+  #theme = shinytheme("superhero"), #superhero
   # Application title.
-  titlePanel("TCS : Demo data analytics"),
+  titlePanel("Disect the data: Demo data analytics"),
   
 
   sidebarLayout(
     sidebarPanel( tags$head(narrowSidebar),
       
       selectInput("dataset", "Choose a dataset:", 
-                  choices = c("rock", "pressure", "cars")),
+                  choices = c("German Bank data")),
                   #choices = list.files(pattern = ".csv")) ,
       
       #############################################
-      helpText("-----------------------------------"), 
+      helpText("--------------- HISTOGRAM --------------------"), 
       
-      numericInput("obs", "Histogram of which attribute to view:", 1),
+      #numericInput("obs", "Histogram of which attribute to view:", 1),
+      selectInput("obs", "Histogram of attribute :", 
+                  choices = names(data)),
       
       helpText("Note: After updating , please open histogram tab"),
       
@@ -32,19 +39,22 @@ fluidPage(
                   max = 100,
                   value = 10),
       #############################################
-      helpText("-----------------------------------"),
+      helpText("--------------- SCATTER PLOT --------------------"),
       selectInput("scatterplotX", "Choose X-axis:", 
-                  choices = 1:5),
+                  choices = names(data)),
       
       selectInput("scatterplotY", "Choose Y-axis:", 
-                  choices = 1:5),
+                  choices = names(data)),
       
       submitButton("View Scatter plot"),
       
       #############################################
-      
-      
-      
+      helpText("--------------- CLUSTERING --------------------"),
+      selectInput('xcol', 'X Variable', names(data)),
+      selectInput('ycol', 'Y Variable', names(data),
+                  selected=names(data)[[2]]),
+      numericInput('clusters', 'Cluster count', 3,min = 1, max = 9),
+      submitButton("View Clusters"),
       width = 3
     ),
     
@@ -82,13 +92,28 @@ fluidPage(
         ),
         
         tabPanel("correlation matrix",
-                 plotOutput("corrmat")
+                 plotOutput("corrmat")),
+        
+        
+        
+        tabPanel("clustering",
+                 h4("Clusters"),
+                 plotOutput('clustering')),
+        tabPanel("gini",
+                 h4("Gini score"),
+                 plotOutput('gini')),
+        tabPanel("variable_importance",
+                 h4("Variable importance"),
+                 plotOutput('variable_importance')),
+        tabPanel("Boruta",
+                 h4("Boruta "),
+                 plotOutput('Boruta'),
+                 h4("Best features selected by boruta algorithm"),
+                 verbatimTextOutput("model")),
+        tabPanel("model",h4("Performance of models"),
                  
-                 
-                 
-        )
-      
-    )
+                 plotOutput('model1'))
   )
+)
 )
 )
